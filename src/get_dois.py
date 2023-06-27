@@ -47,6 +47,10 @@ for DOI_END in DOIS_END:
     FNAME = f"data/DOIs/{FNAME}.tsv"
     if "findings-" in FNAME:
         FNAME = FNAME.replace("findings-", "").replace(".tsv", "-findings.tsv")
+    if "-long" in FNAME:
+        FNAME = FNAME.replace("-long", "-main-long")
+    if "-short" in FNAME:
+        FNAME = FNAME.replace("-short", "-main-short")
     f = open(FNAME, "w")
     f.write("DOI\n")
 

@@ -5,21 +5,26 @@ import random
 import argparse
 
 args = argparse.ArgumentParser()
-args.add_argument("-fm", "--file-main",
-                  default="data/2020.emnlp-main.cit2023.tsv")
-args.add_argument("-ff", "--file-findings",
-                  default="data/2020.emnlp-findings.cit2023.tsv")
+args.add_argument(
+    "-fm", "--file-main", nargs="+",
+    default=["data/2020.emnlp-main.cit2023.tsv"]
+)
+args.add_argument(
+    "-ff", "--file-findings", nargs="+",
+    default=["data/2020.emnlp-findings.cit2023.tsv"]
+)
 args = args.parse_args()
 
 
-def read(fname):
+def read(fnames):
     lst = []
-    with open(fname, 'r') as f:
-        for i, line in enumerate(f):
-            if i == 0:
-                continue
-            split = line.strip().split("\t")
-            lst.append(int(split[1]))
+    for fname in fnames:
+        with open(fname, 'r') as f:
+            for i, line in enumerate(f):
+                if i == 0:
+                    continue
+                split = line.strip().split("\t")
+                lst.append(int(split[1]))
     return lst
 
 
@@ -75,4 +80,9 @@ for (desc, statistic, comp) in [
         (">= 100", gtr100, high),
         (">= 200", gtr200, high)
 ]:
-	    print(f"{desc.upper():<10} main: {statistic(data_main):.3f} findings: {statistic(data_find):.3f} p-value {test(data_main, data_find, statistic, comp)}")
+    print(
+        f"{desc.upper():<10}",
+        f"main: {statistic(data_main):7.3f}",
+        f"findings: {statistic(data_find):7.3f}",
+        f"p-value {test(data_main, data_find, statistic, comp):.5f}"
+    )

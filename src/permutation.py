@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
+
 import numpy as np
 import random
 import sys
-
 
 def read(fname):
 	lst = []

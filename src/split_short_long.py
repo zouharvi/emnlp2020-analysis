@@ -12,7 +12,7 @@ args.add_argument(
     "-t", "--tsv-file",
     default="data/2022.acl-findings.cit2023.tsv"
 )
-args.add_argument("-y", "--yaml-file", default="tmp/papers_acl_2022.yml")
+args.add_argument("-y", "--yaml-file", default="tmp/acl_2022_findings.yml")
 args = args.parse_args()
 
 PREFIX = args.tsv_file.split("/")[-1]
@@ -55,8 +55,8 @@ for doi_orig, cit in tqdm.tqdm(data):
     while title is None:
         title = get_title(doi)
         attempts += 1
-        if attempts >= 2 and title is None:
-            print("Skipping", doi, "after 2 unsuccessful attempts")
+        if attempts >= 4 and title is None:
+            print("Skipping", doi, "after 4 unsuccessful attempts")
             # try original DOI as fallback
             if doi != doi_orig:
                 doi = doi_orig
